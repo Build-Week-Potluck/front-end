@@ -1,4 +1,4 @@
-Welcome to 
+Welcome to Our Potluck Planner!
 
 Proposal 
 What problem does your app solve?
