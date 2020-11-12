@@ -1,10 +1,28 @@
 import './App.css';
-import React from 'react';
-import {Route, Link} from "react-router-dom";
+import React, {useState} from 'react';
+import { Route, Link} from "react-router-dom";
 import Login from "./components/login"
 import Register from "./components/register"
 
+
+
+const Logout = () =>{
+  console.log("Logout")
+}
 function App() {
+  const [organizer, setOrganizer] = useState({
+    group:"",
+    organizer:"",
+    email:"",
+    date:"",
+    theme:""
+  });
+  
+  const [error, setError] = useState("");
+  
+  const UserLogin = details => {
+    console.log(details);
+  }
   return (
     <div className="App">
       <nav className="header">
@@ -16,8 +34,9 @@ function App() {
       </nav>
       <Route path ="/register" component={Register}/>
       <Route path="/login" component={Login}/>
-  
-    </div>
+      
+  </div>
+    
   );
 };
 
