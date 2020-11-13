@@ -1,5 +1,15 @@
 import React from 'react';
 import {  Form, FormGroup,Label,Input,Card,CardTitle} from "reactstrap";
+import * as yup from "yup";
+
+const LoginForm = (props) => {
+    const formSchema = yup.object().shape({
+      email:yup.string().email("Must use a valid email"),
+      password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") 
+    })
+}
+
+
 function Login (){
     return (
         <Card>

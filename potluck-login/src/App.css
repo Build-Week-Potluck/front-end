@@ -42,7 +42,11 @@
                             padding-top: 30px;
                             min-height: 100px;
                         }
-                        
+                        button {
+                          color: #ED786A;
+                          background-color: aliceblue;
+                          margin:50px;
+                        }
                         header a {
                             color: #777777;
                             text-decoration: none;
