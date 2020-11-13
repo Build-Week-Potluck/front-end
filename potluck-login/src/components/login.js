@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup,Label,Input,Card,CardTitle} from "reactstrap";
+import {  Form, FormGroup,Label,Input,Card,CardTitle} from "reactstrap";
 function Login (){
     return (
         <Card>
@@ -14,7 +14,7 @@ function Login (){
                     <Label htmlFor="password" name="password">Password:</Label>
                     <Input type="password" name="password" id="password"/>
                 </FormGroup>
-                <Button>Submit</Button>
+                <input type="submit" value="LOGIN"/>
             </div>
         </Form>
         </Card>

@@ -34,6 +34,8 @@ function App() {
       </nav>
       <Route path ="/register" component={Register}/>
       <Route path="/login" component={Login}/>
+
+     
       
   </div>
     
