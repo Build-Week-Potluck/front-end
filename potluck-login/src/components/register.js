@@ -1,5 +1,6 @@
 import React /*{useState}*/ from "react";
-import { Form, FormGroup,Label,Input,Card,CardTitle} from "reactstrap";
+import {Link} from "react-router-dom";
+import { Form, FormGroup,Label,Input,Card} from "reactstrap";
 //import * as yup from "yup";
 //import axios from "axios";
 
@@ -35,10 +36,31 @@ import { Form, FormGroup,Label,Input,Card,CardTitle} from "reactstrap";
 function Register () {
 
     return (
+        <div className="Login">
+        <header>
+        <div className="header_container">
+            <div className="logo_container">
+                <h1> Plan-A-Potluck</h1>
+                <img src="images/potluck_logo.jpg" alt="logo"/>
+                <p>Good Times, Good Food</p>
+            </div>
+            <nav className="nav_container">
+                <ul>
+                <li><Link className="home" to="/">Home</Link></li>
+                          <li><Link className="about" to="/about">About Us</Link></li>
+                          <li><Link className="login" to ="/login">Login</Link></li>
+                          <li><Link className="register" to ="/register">Register</Link></li>
+      
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+        <div>
         <Card>
          <Form className="registerForm" >
              <div>
-                 <CardTitle>Register Here!</CardTitle>
+                 <h1>Register Here!</h1>
                  <FormGroup>
                      <Label htmlFor = "name">Group Name:</Label>
                      <Input type="text" name= "name" id="name" />
@@ -72,6 +94,8 @@ function Register () {
              </div>
              </Form>   
         </Card>
+        </div>
+        </div>
     );
 
     }
