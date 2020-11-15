@@ -46,7 +46,7 @@ function Register () {
             </div>
             <nav className="nav_container">
                 <ul>
-                <li><Link className="home" to="/">Home</Link></li>
+                        <li><Link className="home" to="/">Home</Link></li>
                           <li><Link className="about" to="/about">About Us</Link></li>
                           <li><Link className="login" to ="/login">Login</Link></li>
                           <li><Link className="register" to ="/register">Register</Link></li>

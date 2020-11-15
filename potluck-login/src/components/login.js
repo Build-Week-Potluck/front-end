@@ -1,14 +1,52 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {  Form, FormGroup,Label,Input,Card} from "reactstrap";
-import * as yup from "yup";
 
-const LoginForm = (props) => {
-    const formSchema = yup.object().shape({
-      email:yup.string().email("Must use a valid email"),
-      password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") 
-    })
+//VALIDATION
+const LoginForm = () => {
+    const initialValues = {email:"", password: ""};
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    };
+
+    const  submitForm = () => {
+    console.log(formValues);
 }
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormValues({...formValues, [name]: value});
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validate(formValues));
+        setIsSubmitting(true);
+    };
+
+    const validate = (values) => {
+        let errors = {};
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if(!values.email){
+            errors.email =  "Cannot be blank";
+        }else if (!regex.test(values.email)){
+            errors.email = "Invalid email format";
+        }
+        if(!values.password){
+            errors.password = "Cannot be blank";
+        }else if (values.password.length <8){
+            errors.password = "Password must be more than 8 characters";
+        }
+        return errors;
+    };
+
+    useEffect(()=>{
+        if (Object.keys(formErrors).length === 0 &&  isSubmitting){
+            submitForm();
+        }
+    }, [formErrors]);
 
 
 class Login extends React.Component {
@@ -35,17 +73,41 @@ class Login extends React.Component {
         </div>
     </header>
     <div>
+        <h1>Sign In</h1>
+        {Object.keys(formErrors).length === 0 && isSubmitting && (
+            <span className = "success-msg">Signed in succesfully</span>
+        )}
         <Card>
-        <Form>
+        <Form onSubmit={handleSubmit} noValidate>
             <div>
                 <h1>Login</h1>
                 <FormGroup>
                     <Label htmlFor ="email">Email:</Label>
-                    <Input type="email" name="email" id="email"/>
+                    <Input 
+                    type="email" 
+                    name="email" 
+                    id="email"
+                     value={formValues.email} 
+                     onChange={handleChange}
+                     className = {formErrors.email && "input-error"}
+                     />
+                     {formErrors.email && (
+                         <span className = "error">{formErrors.email}</span>
+                     )}
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="password" name="password">Password:</Label>
-                    <Input type="password" name="password" id="password"/>
+                    <Input 
+                    type="password" 
+                    name="password" 
+                    id="password"
+                    value = {formValues.password}
+                    onChange={handleChange}
+                    className= {formErrors.password && "input-error"}
+                    />
+                    {formErrors.password && (
+                         <span className = "error">{formErrors.password}</span>
+                     )}
                 </FormGroup>
                 <input type="submit" value="LOGIN"/>
             </div>
@@ -57,4 +119,5 @@ class Login extends React.Component {
     );
 };
 }
+
 export default Login;
