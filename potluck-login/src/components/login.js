@@ -9,11 +9,11 @@ const LoginForm = () => {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    }
-
-    const submitForm = () => {
-        console.log(formValues);
     };
+
+    const  submitForm = () => {
+    console.log(formValues);
+}
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -73,6 +73,10 @@ class Login extends React.Component {
         </div>
     </header>
     <div>
+        <h1>Sign In</h1>
+        {Object.keys(formErrors).length === 0 && isSubmitting && (
+            <span className = "success-msg">Signed in succesfully</span>
+        )}
         <Card>
         <Form onSubmit={handleSubmit} noValidate>
             <div>
@@ -115,4 +119,5 @@ class Login extends React.Component {
     );
 };
 }
+
 export default Login;
