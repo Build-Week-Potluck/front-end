@@ -1,56 +1,47 @@
-import React , {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {  Form, FormGroup,Label,Input,Card} from "reactstrap";
 
-//VALIDATION
-const LoginForm = () => {
+
+const Login =()=> {
     const initialValues = {email:"", password: ""};
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    };
-
-    const  submitForm = () => {
-    console.log(formValues);
-}
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormValues({...formValues, [name]: value});
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmitting(true);
-    };
-
-    const validate = (values) => {
-        let errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if(!values.email){
-            errors.email =  "Cannot be blank";
-        }else if (!regex.test(values.email)){
-            errors.email = "Invalid email format";
-        }
-        if(!values.password){
-            errors.password = "Cannot be blank";
-        }else if (values.password.length <8){
-            errors.password = "Password must be more than 8 characters";
-        }
-        return errors;
-    };
-
-    useEffect(()=>{
-        if (Object.keys(formErrors).length === 0 &&  isSubmitting){
-            submitForm();
-        }
-    }, [formErrors]);
-
-
-class Login extends React.Component {
-    render(){
+   
+        const handleChange = (e) => {
+            const {name, value} = e.target;
+            setFormValues({...formValues, [name]: value});
+        };
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            setFormErrors(validate(formValues));
+            setIsSubmitting(true);
+        };
+        const validate = (values) => {
+            let errors = {};
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+            if(!values.email){
+                errors.email =  "Cannot be blank";
+            }else if (!regex.test(values.email)){
+                errors.email = "Invalid email format";
+            }
+            if(!values.password){
+                errors.password = "Cannot be blank";
+            }else if (values.password.length <8){
+                errors.password = "Password must be more than 8 characters";
+            }
+            return errors;
+        };
+        useEffect(()=>{
+            if (Object.keys(formErrors).length === 0 &&  isSubmitting){
+                const  submitForm = () => {
+                    console.log(formValues);
+                }
+                submitForm();
+            }
+        }, [formErrors, isSubmitting,formValues]);
     return (
         <div className="Login">
         <header>
@@ -73,7 +64,7 @@ class Login extends React.Component {
         </div>
     </header>
     <div>
-        <h1>Sign In</h1>
+    <h1>Sign In</h1>
         {Object.keys(formErrors).length === 0 && isSubmitting && (
             <span className = "success-msg">Signed in succesfully</span>
         )}
@@ -118,6 +109,5 @@ class Login extends React.Component {
         
     );
 };
-}
 
 export default Login;

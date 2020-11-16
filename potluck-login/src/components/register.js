@@ -1,11 +1,14 @@
-import React /*{useState}*/ from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import { Form, FormGroup,Label,Input,Card} from "reactstrap";
-//import * as yup from "yup";
-//import axios from "axios";
+import * as yup from "yup";
+import axios from "axios";
 
-//const RegisterForm = (props) => {
-    /*const formSchema = yup.object().shape({
+
+
+
+const Register= ()=> {
+    const formSchema = yup.object().shape({
         group:yup.string(),
         organizer:yup.string().required("Organizer must be required"),
       email:yup.string().email("Must use a valid email"),
@@ -26,15 +29,6 @@ import { Form, FormGroup,Label,Input,Card} from "reactstrap";
         email:"",
         password:""
     });
-*/
-   // VALIDATION
-   
-    
-    
-
-
-function Register () {
-
     return (
         <div className="Login">
         <header>
@@ -46,7 +40,7 @@ function Register () {
             </div>
             <nav className="nav_container">
                 <ul>
-                        <li><Link className="home" to="/">Home</Link></li>
+                <li><Link className="home" to="/">Home</Link></li>
                           <li><Link className="about" to="/about">About Us</Link></li>
                           <li><Link className="login" to ="/login">Login</Link></li>
                           <li><Link className="register" to ="/register">Register</Link></li>
@@ -98,7 +92,8 @@ function Register () {
         </div>
     );
 
-    }
+}
+
 
 
 export default Register;
