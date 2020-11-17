@@ -9,7 +9,7 @@ import axios from "axios";
 
 const Register= ()=> {
     const formSchema = yup.object().shape({
-        group:yup.string(),
+        name:yup.string(),
         organizer:yup.string().required("Organizer must be required"),
       email:yup.string().email("Invalid email format"),
       password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") ,
@@ -17,28 +17,33 @@ const Register= ()=> {
     });
 
     const [user,setUser] = useState({
-        group:"",
+        name:"",
         organizer:"",
         email:"",
-        password:""
+        password:"",
+        date:"",
+        theme:""
     });
     
     const [error, setError] = useState({
-        group:"",
+        name:"",
         organizer:"",
         email:"",
-        password:""
+        password:"",
+        date:"",
+        theme:""
     });
 
     const validate = e => {
-        let value = e.target.type ==="";
-        yup.reach(formSchema, e.target.value)
+        let value = e.target.value ;
+        yup.reach(formSchema, e.target.name)
         .validate(value)
         .then(valid => {
             setError({
                 ...error,
                 [e.target.name]:""
             });
+            console.log(error);
         }).catch(err =>{
             setError({
                 ...error,
@@ -47,15 +52,21 @@ const Register= ()=> {
         });
     };
     const inputChange = e => {
+       // console.log(e);
         e.persist();
         validate(e);
-        let value = e.target.type === "";
-        setUser({ ...user, [e.target.value]: value });
+        
+        setUser({ ...user, [e.target.name]: e.target.value});
     };
-
-    const formSubmit = e => {
+    /*
+    const [submit, setSubmit] = useState(false);
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("form submitted");
+        console.log("form submitted")
+        setError(validate(user));
+        setSubmit(true);
+    }
+    */
     
         axios
         .post("https://reqres.in/api/users", user)
@@ -63,10 +74,12 @@ const Register= ()=> {
             setUser(res.data);
             console.log("completed", res);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+        });
     };
-    
-    return (
+
+      return (
         <div className="Login">
         <header>
         <div className="header_container">
@@ -89,30 +102,31 @@ const Register= ()=> {
     </header>
         <div>
         <Card>
-         <Form className="registerForm" onSubmit={formSubmit} >
+         <Form className="registerForm" onSubmit={handleSubmit} >
              <div>
                  <h1>Register Here!</h1>
+                 
                  <FormGroup>
                      <Label htmlFor = "name">Group Name:</Label>
                      <Input type="text" name= "name" id="name" value={user.name} onChange={inputChange} />
                      
                  </FormGroup>
                  <FormGroup>
-                     <Label htmlFor = "name1" name="name1" id="name">Organizer:</Label>
-                     <Input type="text" name= "name1" id="name1" value={user.name} onChange={inputChange}/>
+                     <Label htmlFor = "organizer" name="organizer" id="name">Organizer:</Label>
+                     <Input type="text" name= "organizer" id="name1" value={user.organizer} onChange={inputChange}/>
+                     {error.organizer}
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "email" name="email" id="email">Email:</Label>
                      <Input type="email" name= "email" id="email" value={user.email} onChange={inputChange}/>
+                     {error.email}
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "password" name="password" id="password">Create A Password:</Label>
                      <Input type="password" name= "password" id="password" value={user.password} onChange={inputChange}/>
+                     {error.password}
                  </FormGroup>
-                 <FormGroup>
-                     <Label htmlFor = "password1" name="password1" id="password">Confirm Password:</Label>
-                     <Input type="password" name= "password1" id="1"/>
-                 </FormGroup>
+                 
                  <FormGroup>
                      <Label htmlFor = "date" name="date" id="date">Date of Event:</Label>
                      <Input type="date" name= "date" id="date"/>
@@ -129,8 +143,6 @@ const Register= ()=> {
         </div>
     );
 
-}
-
-
+      
 
 export default Register;
