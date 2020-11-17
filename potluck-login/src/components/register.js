@@ -58,7 +58,7 @@ const Register= ()=> {
         
         setUser({ ...user, [e.target.name]: e.target.value});
     };
-    /*
+    
     const [submit, setSubmit] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,18 +66,17 @@ const Register= ()=> {
         setError(validate(user));
         setSubmit(true);
     }
-    */
     
-        axios
-        .post("https://reqres.in/api/users", user)
-        .then(res => {
-            setUser(res.data);
-            console.log("completed", res);
-        })
-        .catch(err => {
-            console.log(err)
-        });
-    };
+    
+   axios
+   .post("https://reqres.in/api/users", user)
+   .then(res => {
+       setUser(res.data);
+       console.log("completed", res);
+   })
+   .catch((err)=>{
+       console.log(err);
+   })
 
       return (
         <div className="Login">
@@ -142,7 +141,7 @@ const Register= ()=> {
         </div>
         </div>
     );
-
+      }
       
 
 export default Register;
