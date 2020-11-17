@@ -11,7 +11,7 @@ const Register= ()=> {
     const formSchema = yup.object().shape({
         group:yup.string(),
         organizer:yup.string().required("Organizer must be required"),
-      email:yup.string().email("Must use a valid email"),
+      email:yup.string().email("Invalid email format"),
       password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") ,
       
     });
@@ -29,6 +29,43 @@ const Register= ()=> {
         email:"",
         password:""
     });
+
+    const validate = e => {
+        let value = e.target.type ==="";
+        yup.reach(formSchema, e.target.value)
+        .validate(value)
+        .then(valid => {
+            setError({
+                ...error,
+                [e.target.name]:""
+            });
+        }).catch(err =>{
+            setError({
+                ...error,
+                [e.target.name]:err.errors[0]
+            });
+        });
+    };
+    const inputChange = e => {
+        e.persist();
+        validate(e);
+        let value = e.target.type === "";
+        setUser({ ...user, [e.target.value]: value });
+    };
+
+    const formSubmit = e => {
+        e.preventDefault();
+        console.log("form submitted");
+    
+        axios
+        .post("https://reqres.in/api/users", user)
+        .then(res => {
+            setUser(res.data);
+            console.log("completed", res);
+        })
+        .catch(err => console.log(err));
+    };
+    
     return (
         <div className="Login">
         <header>
@@ -52,25 +89,25 @@ const Register= ()=> {
     </header>
         <div>
         <Card>
-         <Form className="registerForm" >
+         <Form className="registerForm" onSubmit={formSubmit} >
              <div>
                  <h1>Register Here!</h1>
                  <FormGroup>
                      <Label htmlFor = "name">Group Name:</Label>
-                     <Input type="text" name= "name" id="name" />
+                     <Input type="text" name= "name" id="name" value={user.name} onChange={inputChange} />
                      
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "name1" name="name1" id="name">Organizer:</Label>
-                     <Input type="text" name= "name1" id="name1"/>
+                     <Input type="text" name= "name1" id="name1" value={user.name} onChange={inputChange}/>
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "email" name="email" id="email">Email:</Label>
-                     <Input type="email" name= "email" id="email"/>
+                     <Input type="email" name= "email" id="email" value={user.email} onChange={inputChange}/>
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "password" name="password" id="password">Create A Password:</Label>
-                     <Input type="password" name= "password" id="password"/>
+                     <Input type="password" name= "password" id="password" value={user.password} onChange={inputChange}/>
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "password1" name="password1" id="password">Confirm Password:</Label>
