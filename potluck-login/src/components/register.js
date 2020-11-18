@@ -61,17 +61,19 @@ const Register= ()=> {
     }
     const submitHandle = (e) => {
         e.preventDefault();
-
+        
         axios
         .post("https://reqres.in/api/users", user)
         .then(res => {
             setUser(res.data);
-            console.log("completed", res);
-            alert(`Welcome ${res.data.organizer}`)
+            console.log("completed", res)
+          alert(`Welcome ${res.data.organizer}`)
+          console.log(res.data.user)
         })
         .catch(err => {
             console.log("INVALID ",err);
         });
+        
 
     }
     
