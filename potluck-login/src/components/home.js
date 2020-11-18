@@ -9,7 +9,7 @@ class Home extends React.Component{
            
            <header>
               <div className="header_container">
-                  <div class="logo_container">
+                  <div className="logo_container">
                       <h1> Plan-A-Potluck</h1>
                       <img src="images/potluck_logo.jpg" alt="logo"/>
                       <p>Good Times, Good Food</p>
