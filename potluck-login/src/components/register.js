@@ -69,9 +69,9 @@ const Register= ()=> {
         .post("https://reqres.in/api/users", user)
         .then(res => {
             setUser(res.data);
-            console.log("completed", res)
+            console.log("completed", res.data)
           alert(`Welcome ${res.data.fName}`)
-          console.log(res.data.user)
+         
         })
         .catch(err => {
             console.log("INVALID ",err);
