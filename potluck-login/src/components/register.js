@@ -9,8 +9,9 @@ import axios from "axios";
 
 const Register= ()=> {
     const formSchema = yup.object().shape({
-        name:yup.string(),
-        organizer:yup.string().required("Organizer must be required"),
+        fName:yup.string().required("First Name is required"),
+        lName:yup.string().required("Last Name is required"),
+        role:yup.string().required("Role must be required"),
       email:yup.string().email("Invalid email format"),
       password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") ,
       date:yup.date(),
@@ -18,8 +19,9 @@ const Register= ()=> {
     });
 
     const [user,setUser] = useState({
-        name:"",
-        organizer:"",
+        fName:"",
+        lName:"",
+        role:"",
         email:"",
         password:"",
         date:"",
@@ -27,8 +29,9 @@ const Register= ()=> {
     });
     
     const [error, setError] = useState({
-        name:"",
-        organizer:"",
+        fName:"",
+        lName:"",
+        role:"",
         email:"",
         password:"",
         date:"",
@@ -67,7 +70,7 @@ const Register= ()=> {
         .then(res => {
             setUser(res.data);
             console.log("completed", res)
-          alert(`Welcome ${res.data.organizer}`)
+          alert(`Welcome ${res.data.fName}`)
           console.log(res.data.user)
         })
         .catch(err => {
@@ -107,14 +110,19 @@ const Register= ()=> {
                  <h1>Register Here!</h1>
                  
                  <FormGroup>
-                     <Label htmlFor = "name">Group Name:</Label>
-                     <Input type="text" name= "name" id="name" value={user.name} onChange={handleChange} />
-                     
+                     <Label htmlFor = "fName">First Name:</Label>
+                     <Input type="text" name= "fName" id="fName" value={user.fName} onChange={handleChange} />
+                     {error.fName}
                  </FormGroup>
                  <FormGroup>
-                     <Label htmlFor = "organizer" name="organizer" id="name">Organizer:</Label>
-                     <Input type="text" name= "organizer" id="organizer" value={user.organizer} onChange={handleChange} />
-                     {error.organizer}
+                     <Label htmlFor = "lName">Last Name:</Label>
+                     <Input type="text" name= "lName" id="lName" value={user.lName} onChange={handleChange} />
+                     {error.lName}
+                 </FormGroup>
+                 <FormGroup>
+                     <Label htmlFor = "role" name="role" id="role">Role:</Label>
+                     <Input type="text" name= "role" id="role" value={user.role} onChange={handleChange} />
+                     {error.role}
                  </FormGroup>
                  <FormGroup>
                      <Label htmlFor = "email" name="email" id="email">Email:</Label>
