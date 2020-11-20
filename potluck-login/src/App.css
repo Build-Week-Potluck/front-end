@@ -250,3 +250,8 @@
                                   display: flex;
                               }
                           }
+
+                          .div.form-group{
+                              color:red;
+
+                          }

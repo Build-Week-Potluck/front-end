@@ -1,4 +1,4 @@
-  import React, {useState} from "react";
+  import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import { Form, FormGroup,Label,Input,Card} from "reactstrap";
 import * as yup from "yup";
@@ -12,10 +12,10 @@ const Register= ()=> {
         fName:yup.string().required("First Name is required"),
         lName:yup.string().required("Last Name is required"),
         role:yup.string().required("Role must be required"),
-      email:yup.string().email("Invalid email format"),
+      email:yup.string().email("Invalid email format").required("Email is required"),
       password:yup.string().min(8, "Must be at least 8 characters long").required ("Password is a required field") ,
-      date:yup.date(),
-      theme:yup.string()
+      
+      
     });
 
     const [user,setUser] = useState({
@@ -24,8 +24,7 @@ const Register= ()=> {
         role:"",
         email:"",
         password:"",
-        date:"",
-        theme:""
+        
     });
     
     const [error, setError] = useState({
@@ -34,9 +33,12 @@ const Register= ()=> {
         role:"",
         email:"",
         password:"",
-        date:"",
-        theme:""
+        
     });
+    
+    const [disabled, setDisabled] = useState(true);
+
+
 
    
     const validate = e => {
@@ -48,30 +50,45 @@ const Register= ()=> {
                 ...error,
                 [e.target.name]:""
             });
-            console.log(error);
+            console.log(user);
         }).catch(err =>{
             setError({
                 ...error,
                 [e.target.name]:err.errors[0]
+                
             });
+            console.log(error)
         });
     };
+
+    useEffect (()=>{
+    formSchema.isValid(user)
+    .then(valid => setDisabled(!valid));
+   
+        })
+    
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setUser({...user, [name]: value});
         validate(e)
     }
-    const submitHandle = (e) => {
-        e.preventDefault();
+
         
+    
+   const submitHandle = (e) => {
+        
+        e.preventDefault();
+        console.log(e.target);
+       
+
         axios
         .post("https://reqres.in/api/users", user)
         .then(res => {
             setUser(res.data);
-            console.log("completed", res)
+            console.log("completed", res.data)
           alert(`Welcome ${res.data.fName}`)
-          console.log(res.data.user)
+         
         })
         .catch(err => {
             console.log("INVALID ",err);
@@ -105,7 +122,7 @@ const Register= ()=> {
     </header>
         <div>
         <Card>
-         <Form className="registerForm"   onSubmit = {submitHandle}>
+         <Form className="registerForm" onSubmit ={submitHandle} >
              <div>
                  <h1>Register Here!</h1>
                  
@@ -135,22 +152,16 @@ const Register= ()=> {
                      {error.password}
                  </FormGroup>
                  
-                 <FormGroup>
-                     <Label htmlFor = "date" name="date" id="date">Date of Event:</Label>
-                     <Input type="date" name= "date" id="date" onChange={handleChange}/>
-                 </FormGroup>
-                 <FormGroup>
-                     <Label htmlFor = "theme" name="theme" id="theme">Occasion/Theme:</Label>
-                     <Input type="text" name= "theme" id="theme" onChange={handleChange}/>
-                 </FormGroup>
-                 <input type="submit" value="REGISTER"/>
+                
+                <button type="submit"  disabled={disabled}>Register</button>
+
              </div>
              </Form>   
         </Card>
         </div>
         </div>
     );
-      }
       
-
+}
+    
 export default Register;
