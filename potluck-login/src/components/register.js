@@ -87,7 +87,7 @@ const Register= ()=> {
         .then(res => {
             setUser(res.data);
             console.log("completed", res.data)
-          alert(`Welcome ${res.data.fName}` `${res.data.lName}`)
+          alert(`Welcome ${res.data.fName} ${res.data.lName}`)
          
         })
         .catch(err => {
