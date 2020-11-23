@@ -83,7 +83,7 @@ const Register= ()=> {
        
 
         axios
-        .post("https://reqres.in/api/users", user)
+        .post("https://virtualpotluck.herokuapp.com/register", user)
         .then(res => {
             setUser(res.data);
             console.log("completed", res.data)
